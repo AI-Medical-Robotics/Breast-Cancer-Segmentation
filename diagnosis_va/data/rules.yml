@@ -11,3 +11,39 @@ rules:
   steps:
   - intent: bot_challenge
   - action: utter_iamabot
+
+  - rule: Request Patient Breast Cancer Classifier Report
+  steps:
+    - intent: req_patient_breast_clf_report
+    - action: patient_report_clf_form
+    - active_loop: patient_report_clf_form
+
+  - rule: Send Patient Breast Cancer Classifier Report
+  condition:
+  - active_loop: patient_report_clf_form
+  steps:
+  - action: patient_report_clf_form
+  - active_loop: null
+  - slot_was_set:
+    - requested_slot: null
+  - action: utter_report_ack
+  - action: utter_patient_clf_id
+  - action: action_run_lesion_classification
+
+  - rule: Request Patient Breast Cancer Segmentation Report
+  steps:
+    - intent: req_patient_breast_seg_report
+    - action: patient_report_seg_form
+    - active_loop: patient_report_seg_form
+
+  - rule: Send Patient Breast Cancer Segmentation Report
+  condition:
+  - active_loop: patient_report_seg_form
+  steps:
+  - action: patient_report_seg_form
+  - active_loop: null
+  - slot_was_set:
+    - requested_slot: null
+  - action: utter_report_ack
+  - action: utter_patient_seg_id
+  - action: action_run_lesion_segmentation

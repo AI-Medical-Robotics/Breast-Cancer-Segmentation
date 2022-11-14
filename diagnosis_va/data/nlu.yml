@@ -89,3 +89,8 @@ nlu:
     - are you a human?
     - am I talking to a bot?
     - am I talking to a human?
+
+- intent: greet_radiologist
+  examples: |
+    - Hi I am a radiologist!
+    - Hey radiologist here

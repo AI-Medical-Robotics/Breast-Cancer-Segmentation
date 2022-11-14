@@ -8,10 +8,62 @@ intents:
   - mood_great
   - mood_unhappy
   - bot_challenge
+  - greet_radiologist
+  - lesion_classification
+  - lesion_segmentation
+  - lesion_vol_rendering
+  - req_patient_breast_clf_report
+  - req_patient_breast_seg_report
+
+forms:
+  patient_report_clf_form:
+    required_slots:
+      - patient_clf_id
+  patient_report_seg_form:
+    required_slots:
+      - patient_seg_id
+
+slots:
+  patient_clf_id:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_text
+      conditions:
+        - active_loop: patient_report_clf_form
+        requested_slot: patient_clf_id
+  patient_seg_id:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_text
+      conditions:
+        - active_loop: patient_report_seg_form
+        requested_slot: patient_seg_id
 
 responses:
+  utter_ask_patient_clf_id:
+    - text: "What's the patient ID you need for breast cancer classification?\n
+             [1 - 11]"
+
+  utter_ask_patient_seg_id:
+    - text: "What's the patient ID you need for breast cancer segmentation?\n
+             [1 - 11]"
+
+  utter_report_ack:
+    - text: "Thanks for filling in patient ID for report."
+
+  utter_patient_clf_id:
+    - text: "Getting patient breast cancer classifier report for ID: {patient_clf_id}"
+  
+  utter_patient_seg_id:
+    - text: "Getting patient breast cancer segmentation report for ID: {patient_seg_id}"
+
   utter_greet:
   - text: "Hey! How are you?"
+
+  utter_greet_radiologist:
+  - text: "Hi radiologist! How are you?"
 
   utter_cheer_up:
   - text: "Here is something to cheer you up:"
@@ -32,3 +84,8 @@ responses:
 session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true
+
+actions:
+  - action_run_lesion_classification
+  - action_run_lesion_segmentation
+  - action_run_lesion_vol_rendering
