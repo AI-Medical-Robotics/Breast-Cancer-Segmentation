@@ -1,4 +1,4 @@
-name: cmpe258_proj_attunet_rasa
+name: cmpe258_proj_attunet_rasa_tf_cpu
 channels:
   - defaults
 dependencies:

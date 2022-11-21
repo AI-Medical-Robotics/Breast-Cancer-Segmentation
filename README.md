@@ -21,7 +21,17 @@ Lesion segmentation for breast cancer diagnosis.
 
 TODO: Update environment yml files since I am missing some packages
 
-Start with `environment_rasa_tf_gpu.yml` since my current conda environment uses it.
+Create a `environment_rasa_tf_cpu.yml` conda environment:
+
+~~~bash
+conda env create -f environment_rasa_tf_cpu.yml
+~~~
+
+Create a `environment_rasa_tf_gpu.yml` conda environment:
+
+~~~bash
+conda env create -f environment_rasa_tf_gpu.yml
+~~~
 
 1\. Clone this repo:
 
