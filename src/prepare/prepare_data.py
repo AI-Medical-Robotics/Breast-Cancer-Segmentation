@@ -1,44 +1,46 @@
 # Prepare data for training
-from utils import loadImages
+from utils.utils import loadImages, SIZE
 
 import os
-import keras
+import tensorflow.keras
 import numpy as np
 import pandas as pd
 from glob import glob
 import tensorflow as tf
 
 # Data
-#from keras.preprocessing.image import load_img, img_to_array
-from keras.utils import load_img
-from keras.utils import img_to_array
-from keras.utils import to_categorical
+#from tensorflow.keras.preprocessing.image import load_img, img_to_array
+from tensorflow.keras.utils import load_img
+from tensorflow.keras.utils import img_to_array
+from tensorflow.keras.utils import to_categorical
 
 # Data Viz
 import matplotlib.pyplot as plt
 
 # Model 
 
-from keras import layers
-from keras import models
+from tensorflow.keras import layers
+from tensorflow.keras import models
 
 # Callbacks 
-from keras.callbacks import Callback
-from keras.callbacks import EarlyStopping
-from keras.callbacks import ModelCheckpoint
+from tensorflow.keras.callbacks import Callback
+from tensorflow.keras.callbacks import EarlyStopping
+from tensorflow.keras.callbacks import ModelCheckpoint
 from tf_explain.callbacks.grad_cam import GradCAM
 #https://tf-explain.readthedocs.io/en/latest/usage.html
 
 # Metrics
-from keras.metrics import MeanIoU
+from tensorflow.keras.metrics import MeanIoU
+
 
 def prepare_busi_data():
     # TODO: update base path "/media/james/My Passport/", make it more adaptable
-    file_path = '/media/james/My Passport/Jetson_TX2_CMPE258/Dataset_BUSI_with_GT'
+    file_path = '/media/james/My Passport/Jetson_TX2_CMPE258/Dataset_BUSI_with_GT/'
     labels = sorted(os.listdir(file_path))
     labels
 
     ori_mask_paths = sorted([sorted(glob(file_path + name + "/*mask.png")) for name in labels])
+    # print("ori_mask_paths = ", ori_mask_paths)
     print(ori_mask_paths[0][0])
     print(ori_mask_paths[1][0])
     print(ori_mask_paths[2][0])

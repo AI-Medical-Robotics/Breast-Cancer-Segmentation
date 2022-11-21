@@ -1,51 +1,51 @@
-# train attention UNet
-from prepare.prepare_data import prepare_busi_data
-from models.bcs_models import attention_unet
-from utils.utils import showMask, showImage
-
 # import time
 # import argparse
 # import datetime
 # import re
 
 import os
-import keras
+import tensorflow.keras
 import numpy as np
 import pandas as pd
 from glob import glob
 import tensorflow as tf
 
 # Data
-#from keras.preprocessing.image import load_img, img_to_array
-from keras.utils import load_img
-from keras.utils import img_to_array
-from keras.utils import to_categorical
+#from tensorflow.keras.preprocessing.image import load_img, img_to_array
+from tensorflow.keras.utils import load_img
+from tensorflow.keras.utils import img_to_array
+from tensorflow.keras.utils import to_categorical
 
 # Data Viz
 import matplotlib.pyplot as plt
 
 # Model 
 
-from keras import layers
-from keras import models
+from tensorflow.keras import layers
+from tensorflow.keras import models
 
 # Callbacks 
-from keras.callbacks import Callback
-from keras.callbacks import EarlyStopping
-from keras.callbacks import ModelCheckpoint
+from tensorflow.keras.callbacks import Callback
+from tensorflow.keras.callbacks import EarlyStopping
+from tensorflow.keras.callbacks import ModelCheckpoint
 from tf_explain.callbacks.grad_cam import GradCAM
 #https://tf-explain.readthedocs.io/en/latest/usage.html
 
 # Metrics
-from keras.metrics import MeanIoU
+from tensorflow.keras.metrics import MeanIoU
+
+
+from models.bcs_models import attention_unet
+from utils.utils import showMask, showImage
 
 # class train_bcs_models:
 #     pass
 
 class report(Callback):
-    def __init__(self, images, masks):
+    def __init__(self, images, masks, show_results):
         self.m_images = images
         self.m_masks = masks
+        self.m_show_results = show_results
         
     def on_epoch_end(self, epochs, logs=None):
         id = np.random.randint(200)
@@ -61,36 +61,38 @@ class report(Callback):
         )
 
         #show results:
-        plt.figure(figsize=(10,5))
+        if self.m_show_results:
+            plt.figure(figsize=(10,5))
 
-        plt.subplot(1,3,1)
-        plt.title("Original Image With Mask")
-        showMask(image, mask, cmap='afmhot')
+            plt.subplot(1,3,1)
+            plt.title("Original Image With Mask")
+            showMask(image, mask, cmap='afmhot')
 
-        plt.subplot(1,3,2)
-        plt.title("Original Image With Predicted Mask")
-        showMask(image, pred_mask, cmap='afmhot')
+            plt.subplot(1,3,2)
+            plt.title("Original Image With Predicted Mask")
+            showMask(image, pred_mask, cmap='afmhot')
 
-        plt.subplot(1,3,3)
-        showImage(cam_explain, title="GradCAMCallback")
+            plt.subplot(1,3,3)
+            showImage(cam_explain, title="GradCAMCallback")
 
-        plt.tight_layout()
-        plt.show()
+            plt.tight_layout()
+            plt.show()
+        # add else block to save results as jpgs
 
 def train_attention_unet(images, masks):
     print("images.shape[-3:] = {}".format(images.shape[-3:]))
     print("images.shape = {}".format(images.shape))
     print("masks.shape = {}".format(masks.shape))
 
-    model = attention_unet(images, masks)
+    model = attention_unet()
 
     # Save the model.
     cb = [
         ModelCheckpoint("AttentioUnetModel.h5", save_best_only=True),
-        report()
+        report(images, masks)
     ]
 
-    BATCH_SIZE = 10
+    BATCH_SIZE = 4
     SPE = len(images)//BATCH_SIZE
     print(SPE)
 
@@ -122,10 +124,3 @@ def train_attention_unet(images, masks):
 # args = parser.parse_args()
 # cfg = get_config(args, mode='train')
 # cfg_name = cfg.__class__.__name__
-
-# TODO: As we get more models to train, we'll add conditions
-# Run the data prep function, pass images, masks to train attention UNet
-images, masks = prepare_busi_data()
-train_attention_unet(images, masks)
-
-
