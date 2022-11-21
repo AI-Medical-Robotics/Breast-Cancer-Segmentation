@@ -35,6 +35,8 @@ from tensorflow.keras.metrics import MeanIoU
 # Based on Yoonjung's Jupyter notebook attention unet data prep code
 # James integrated her code into our BC segmentation system app
 def prepare_busi_data():
+    # TODO: Pass an option to prepare data for training/validation or testing...
+        # Already accounted for training, need to account for deployment
     # TODO: update base path "/media/james/My Passport/", make it more adaptable
     file_path = '/media/james/My Passport/Jetson_TX2_CMPE258/Dataset_BUSI_with_GT/'
     labels = sorted(os.listdir(file_path))
