@@ -30,6 +30,24 @@ rules:
   - action: utter_patient_clf_id
   - action: action_run_lesion_classification
 
+  - rule: Request Train Breast Cancer Segmentation Model
+  steps:
+    - intent: req_breast_seg_training
+    - action: breast_seg_model_form
+    - activate_loop: breast_seg_model_form
+  
+  - rule: Send Breast Cancer Segmentation Training Report
+  condition:
+  - active_loop: breast_seg_model_form
+  steps:
+  - action: breast_seg_model_form
+  - active_loop: null
+  - slot_was_set:
+    - requested_slot: null
+  - action: utter_training_model_ack
+  - action: utter_model_seg_name
+  - action: action_train_lesion_segmentation
+
   - rule: Request Patient Breast Cancer Segmentation Report
   steps:
     - intent: req_patient_breast_seg_report
