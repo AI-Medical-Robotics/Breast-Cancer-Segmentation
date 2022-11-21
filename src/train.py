@@ -29,6 +29,7 @@ from evaluate.evaluate_bcs_models import evaluate_attention_unet
 
 # TODO: As we get more models to train, we'll add conditions
 # Run the data prep function, pass images, masks to train attention UNet
-images, masks = prepare_busi_data()
+# default split 80% for training set
+images, masks = prepare_busi_data(train=True)
 trained_att_unet = train_attention_unet(images, masks)
 evaluate_attention_unet(trained_att_unet)
