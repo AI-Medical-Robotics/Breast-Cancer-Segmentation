@@ -40,7 +40,7 @@ class ActionTrainLesionSegmentation(Action):
 
         if model_name == "Attention UNet" or model_name == "attention unet":
             bc_ultrasound_data_path = '/media/james/My Passport/Jetson_TX2_CMPE258/Dataset_BUSI_with_GT/'
-            images, masks = prepare_busi_data(bc_ultrasound_data_path, train=True)
+            images, masks = prepare_busi_data(bc_ultrasound_data_path, prep_train=True)
             trained_att_unet = train_attention_unet(images, masks)
             evaluate_attention_unet(trained_att_unet)
         else:
