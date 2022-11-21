@@ -32,6 +32,7 @@ from tensorflow.keras.metrics import MeanIoU
 
 
 def evaluate_attention_unet(trained_unet):
+    # TODO: Debug history.values() since I get no values. Probably need the UNet to be fully trained
     train_loss, train_acc, train_iou, val_loss, val_acc, val_iou = trained_unet.history.values()
 
     plt.figure(figsize=(20,8))
@@ -58,6 +59,3 @@ def evaluate_attention_unet(trained_unet):
     plt.grid()
 
     plt.show()
-
-attent_unet = load_model("/home/james/proj/james/Breast-Cancer-Segmentation/src/train/AttentioUnetModel.h5")
-evaluate_attention_unet(attent_unet)
