@@ -31,8 +31,8 @@ from tf_explain.callbacks.grad_cam import GradCAM
 from keras.metrics import MeanIoU
 # quantitative
 
-def evaluate_attention_unet():
-    train_loss, train_acc, train_iou, val_loss, val_acc, val_iou = results_epo25.history.values()
+def evaluate_attention_unet(trained_unet):
+    train_loss, train_acc, train_iou, val_loss, val_acc, val_iou = trained_unet.history.values()
 
     plt.figure(figsize=(20,8))
 

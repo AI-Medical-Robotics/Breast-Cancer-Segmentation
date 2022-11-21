@@ -1,47 +1,25 @@
 # train attention UNet
 from bcs_models import attention_unet
+from utils import showMask, showImage
 
-# common
-import os
-import keras
-import numpy as np
-import pandas as pd
-from glob import glob
-import tensorflow as tf
+import argparse
+import datetime
+import re
 
-# Data
-#from keras.preprocessing.image import load_img, img_to_array
-from keras.utils import load_img
-from keras.utils import img_to_array
-from keras.utils import to_categorical
-
-# Data Viz
-import matplotlib.pyplot as plt
-
-# Model 
-
-from keras import layers
-from keras import models
-
-# Callbacks 
-from keras.callbacks import Callback
-from keras.callbacks import EarlyStopping
-from keras.callbacks import ModelCheckpoint
-from tf_explain.callbacks.grad_cam import GradCAM
-#https://tf-explain.readthedocs.io/en/latest/usage.html
-
-# Metrics
-from keras.metrics import MeanIoU
 
 # class train_bcs_models:
 #     pass
 
 class report(Callback):
+    def __init__(self, images, masks):
+        self.m_images = images
+        self.m_masks = masks
+        
     def on_epoch_end(self, epochs, logs=None):
         id = np.random.randint(200)
         explainer = GradCAM()
-        image = images[id]
-        mask = masks[id]
+        image = self.m_images[id]
+        mask = self.m_masks[id]
         pred_mask = self.model.predict(image[np.newaxis,...])
         cam_explain = explainer.explain(
             validation_data=(image[np.newaxis,...], mask),
@@ -67,10 +45,12 @@ class report(Callback):
         plt.tight_layout()
         plt.show()
 
-def train_attention_unet():
-    print(images.shape[-3:])
-    print(images.shape)
-    model = attention_unet()
+def train_attention_unet(images, masks):
+    print("images.shape[-3:] = {}".format(images.shape[-3:]))
+    print("images.shape = {}".format(images.shape))
+    print("masks.shape = {}".format(masks.shape))
+
+    model = attention_unet(images, masks)
 
     cb = [
         ModelCheckpoint("AttentioUnetModel.h5", save_best_only=True),
@@ -90,3 +70,18 @@ def train_attention_unet():
         batch_size=BATCH_SIZE,
         callbacks=cb
     )
+    # return trained attention UNet
+    return results_epo25
+
+parser = argparse.ArgumentParser(description='Yolact Training Script')
+parser.add_argument('--local_rank', type=int, default=None)
+parser.add_argument('--cfg', default='res101_coco', help='The configuration name to use.')
+parser.add_argument('--train_bs', type=int, default=8, help='total training batch size')
+parser.add_argument('--img_size', default=544, type=int, help='The image size for training.')
+parser.add_argument('--resume', default=None, type=str, help='The path of the weight file to resume training with.')
+parser.add_argument('--val_interval', default=4000, type=int,
+                    help='The validation interval during training, pass -1 to disable.')
+parser.add_argument('--val_num', default=-1, type=int, help='The number of images for test, set to -1 for all.')
+parser.add_argument('--traditional_nms', default=False, action='store_true', help='Whether to use traditional nms.')
+parser.add_argument('--coco_api', action='store_true', help='Whether to use cocoapi to evaluate results.')
+
