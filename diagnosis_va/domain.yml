@@ -9,9 +9,6 @@ intents:
   - mood_unhappy
   - bot_challenge
   - greet_radiologist
-  - lesion_classification
-  - lesion_segmentation
-  - lesion_vol_rendering
   - req_patient_breast_clf_report
   - req_patient_breast_seg_report
   - req_breast_seg_training
@@ -33,25 +30,25 @@ slots:
     influence_conversation: true
     mappings:
       - type: from_text
-      conditions:
-        - active_loop: patient_report_clf_form
-        requested_slot: patient_clf_id
+        conditions:
+          - active_loop: patient_report_clf_form
+            requested_slot: patient_clf_id
   patient_seg_id:
     type: text
     influence_conversation: true
     mappings:
       - type: from_text
-      conditions:
-        - active_loop: patient_report_seg_form
-        requested_slot: patient_seg_id
+        conditions:
+          - active_loop: patient_report_seg_form
+            requested_slot: patient_seg_id
   model_seg_name:
-    type:
+    type: text
     influence_conversation: true
     mappings:
       - type: from_text
-      conditions:
-        - active_loop: breast_seg_model_form
-        requested_slot: model_seg_name
+        conditions:
+          - active_loop: breast_seg_model_form
+            requested_slot: model_seg_name
 
 responses:
   utter_ask_patient_clf_id:
@@ -63,7 +60,8 @@ responses:
              [1 - 11]"
 
   utter_ask_model_seg_name:
-    - text: "What's the breast cancer segmentation model's name needed for training?\n"
+    - text: "What's the breast cancer segmentation model's name needed for training?
+             [Attention UNet]\n"
 
   utter_report_ack:
     - text: "Thanks for filling in patient ID for report."

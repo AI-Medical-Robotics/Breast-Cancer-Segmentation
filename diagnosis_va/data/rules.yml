@@ -12,13 +12,13 @@ rules:
   - intent: bot_challenge
   - action: utter_iamabot
 
-  - rule: Request Patient Breast Cancer Classifier Report
+- rule: Request Patient Breast Cancer Classifier Report
   steps:
     - intent: req_patient_breast_clf_report
     - action: patient_report_clf_form
     - active_loop: patient_report_clf_form
 
-  - rule: Send Patient Breast Cancer Classifier Report
+- rule: Send Patient Breast Cancer Classifier Report
   condition:
   - active_loop: patient_report_clf_form
   steps:
@@ -30,13 +30,13 @@ rules:
   - action: utter_patient_clf_id
   - action: action_run_lesion_classification
 
-  - rule: Request Train Breast Cancer Segmentation Model
+- rule: Request Train Breast Cancer Segmentation Model
   steps:
-    - intent: req_breast_seg_training
-    - action: breast_seg_model_form
-    - activate_loop: breast_seg_model_form
+  - intent: req_breast_seg_training
+  - action: breast_seg_model_form
+  - active_loop: breast_seg_model_form
   
-  - rule: Send Breast Cancer Segmentation Training Report
+- rule: Send Breast Cancer Segmentation Training Report
   condition:
   - active_loop: breast_seg_model_form
   steps:
@@ -48,13 +48,13 @@ rules:
   - action: utter_model_seg_name
   - action: action_train_lesion_segmentation
 
-  - rule: Request Patient Breast Cancer Segmentation Report
+- rule: Request Patient Breast Cancer Segmentation Report
   steps:
-    - intent: req_patient_breast_seg_report
-    - action: patient_report_seg_form
-    - active_loop: patient_report_seg_form
+  - intent: req_patient_breast_seg_report
+  - action: patient_report_seg_form
+  - active_loop: patient_report_seg_form
 
-  - rule: Send Patient Breast Cancer Segmentation Report
+- rule: Send Patient Breast Cancer Segmentation Report
   condition:
   - active_loop: patient_report_seg_form
   steps:

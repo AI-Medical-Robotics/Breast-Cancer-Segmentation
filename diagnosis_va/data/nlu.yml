@@ -94,3 +94,27 @@ nlu:
   examples: |
     - Hi I am a radiologist!
     - Hey radiologist here
+
+- intent: req_breast_seg_training
+  examples: |
+    - I would like a DL model trained for breast cancer segmentation
+    - I would like a breast cancer segmentation model trained
+    - I want a DL model trained for breast cancer segmentation
+    - I want a breast cancer segmentation model trained
+    - Give me a trained breast cancer segmentation model
+
+- intent: req_patient_breast_seg_report
+  examples: |
+    - I would like a breast cancer segmentation report
+    - I would like a patient breast cancer segmentation report
+    - I want a breast cancer segmentation report
+    - I want a patient breast cancer segmentation report
+    - Show me a patient breast cancer segmentation report
+
+- intent: req_patient_breast_clf_report
+  examples: |
+    - I would like a breast cancer classification report
+    - I would like a patient breast cancer classification report
+    - I want a breast cancer classification report
+    - I want a patient breast cancer classification report
+    - Show me a patient breast cancer classification report

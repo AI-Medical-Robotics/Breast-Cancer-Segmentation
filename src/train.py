@@ -30,6 +30,7 @@ from evaluate.evaluate_bcs_models import evaluate_attention_unet
 # TODO: As we get more models to train, we'll add conditions
 # Run the data prep function, pass images, masks to train attention UNet
 # default split 80% for training set
-images, masks = prepare_busi_data(train=True)
+bc_ultrasound_data_path = '/media/james/My Passport/Jetson_TX2_CMPE258/Dataset_BUSI_with_GT/'
+images, masks = prepare_busi_data(bc_ultrasound_data_path, train=True)
 trained_att_unet = train_attention_unet(images, masks)
 evaluate_attention_unet(trained_att_unet)

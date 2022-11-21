@@ -27,6 +27,26 @@ from tensorflow.keras import __version__ as keras_version
 import xml.etree.ElementTree as ET
 from sklearn.preprocessing import LabelEncoder
 
+from prepare.prepare_data import prepare_busi_data
+from train.train_bcs_models import train_attention_unet
+from evaluate.evaluate_bcs_models import evaluate_attention_unet
+
+class ActionTrainLesionSegmentation(Action):
+    def name(self):
+        return "action_train_lesion_segmentation"
+    
+    def run(self, dispatcher, tracker, domain):
+        model_name = tracker.get_slot("model_seg_name")
+
+        if model_name == "Attention UNet" or model_name == "attention unet":
+            bc_ultrasound_data_path = '/media/james/My Passport/Jetson_TX2_CMPE258/Dataset_BUSI_with_GT/'
+            images, masks = prepare_busi_data(bc_ultrasound_data_path, train=True)
+            trained_att_unet = train_attention_unet(images, masks)
+            evaluate_attention_unet(trained_att_unet)
+        else:
+            print("Attention UNet only breast cancer segmentation supported model")
+        dispatcher.utter_message(text="Running Breast Cancer Classifier")
+
 class ActionRunLesionClassification(Action):
     def name(self):
         return "action_run_lesion_classification"
