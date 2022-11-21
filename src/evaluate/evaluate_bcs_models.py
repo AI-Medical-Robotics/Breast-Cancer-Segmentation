@@ -59,4 +59,6 @@ def evaluate_attention_unet(trained_unet):
 
     plt.show()
 
+
+
 # qualitative

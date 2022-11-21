@@ -30,9 +30,6 @@ from tf_explain.callbacks.grad_cam import GradCAM
 # Metrics
 from keras.metrics import MeanIoU
 
-# class bcs_models:
-#     pass
-
 def attention_unet(): 
   inputs = keras.Input(shape=(256, 256, 3))
   n_inputs = keras.layers.Lambda(lambda x: x / 255)(inputs)
