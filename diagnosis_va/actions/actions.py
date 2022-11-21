@@ -34,14 +34,14 @@ class ActionRunLesionClassification(Action):
     def run(self, dispatcher, tracker, domain):
         dispatcher.utter_message(text="Running Breast Cancer Classifier")
 
-class ActionRunLesionSegmentation()
+class ActionRunLesionSegmentation():
     def name(self):
         return "action_run_lesion_segmentation"
     
     def run(self, dispatcher, tracker, domain):
         dispatcher.utter_message(text="Running Breast Cancer Segmentation")
 
-class ActionRunLesionVolRendering()
+class ActionRunLesionVolRendering():
     def name(self):
         return "action_run_lesion_vol_rendering"
 
