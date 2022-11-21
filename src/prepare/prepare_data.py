@@ -32,7 +32,8 @@ from tf_explain.callbacks.grad_cam import GradCAM
 # Metrics
 from tensorflow.keras.metrics import MeanIoU
 
-
+# Based on Yoonjung's Jupyter notebook attention unet data prep code
+# James integrated her code into our BC segmentation system app
 def prepare_busi_data():
     # TODO: update base path "/media/james/My Passport/", make it more adaptable
     file_path = '/media/james/My Passport/Jetson_TX2_CMPE258/Dataset_BUSI_with_GT/'

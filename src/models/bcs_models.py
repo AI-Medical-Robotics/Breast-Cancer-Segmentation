@@ -29,7 +29,8 @@ from tf_explain.callbacks.grad_cam import GradCAM
 # Metrics
 from tensorflow.keras.metrics import MeanIoU
 
-
+# Based on Yoonjung's Jupyter notebook attention unet code
+# James integrated her code into our BC segmentation system app
 def attention_unet(): 
     inputs = tf.keras.Input(shape=(256, 256, 3))
     n_inputs = tf.keras.layers.Lambda(lambda x: x / 255)(inputs)

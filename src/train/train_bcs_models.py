@@ -1,8 +1,3 @@
-# import time
-# import argparse
-# import datetime
-# import re
-
 import os
 import tensorflow.keras
 import numpy as np
@@ -41,8 +36,10 @@ from utils.utils import showMask, showImage
 # class train_bcs_models:
 #     pass
 
+# Based on Yoonjung's Jupyter notebook train attention unet code
+# James integrated her code into our BC segmentation system app
 class report(Callback):
-    def __init__(self, images, masks, show_results):
+    def __init__(self, images, masks, show_results=False):
         self.m_images = images
         self.m_masks = masks
         self.m_show_results = show_results
@@ -97,30 +94,19 @@ def train_attention_unet(images, masks):
     print(SPE)
 
     # Training
-    results_epo25 = model.fit(
+    # switching from 25 epochs to 20 epochs, TF warned input ran out of data
+    # I noticed this problem for 20 epochs too.
+    # TF: WARNING:tensorflow:Your input ran out of data; interrupting training. 
+    # Make sure that your dataset or generator can generate at least `steps_per_epoch * epochs` 
+    # batches (in this case, 3900 batches)
+    results_epo20 = model.fit(
         images, masks,
         validation_split=0.2,
-        epochs=25,
+        epochs=20,
         steps_per_epoch=SPE,
         batch_size=BATCH_SIZE,
         callbacks=cb
     )
 
     # return trained attention UNet or saved file location .h5
-    return results_epo25
-
-# parser = argparse.ArgumentParser(description='Breast Cancer Seg Training Script')
-# parser.add_argument('--local_rank', type=int, default=None)
-# parser.add_argument('--cfg', default='res101_coco', help='The configuration name to use.')
-# parser.add_argument('--train_bs', type=int, default=8, help='total training batch size')
-# parser.add_argument('--img_size', default=544, type=int, help='The image size for training.')
-# parser.add_argument('--resume', default=None, type=str, help='The path of the weight file to resume training with.')
-# parser.add_argument('--val_interval', default=4000, type=int,
-#                     help='The validation interval during training, pass -1 to disable.')
-# parser.add_argument('--val_num', default=-1, type=int, help='The number of images for test, set to -1 for all.')
-# parser.add_argument('--traditional_nms', default=False, action='store_true', help='Whether to use traditional nms.')
-# parser.add_argument('--coco_api', action='store_true', help='Whether to use cocoapi to evaluate results.')
-
-# args = parser.parse_args()
-# cfg = get_config(args, mode='train')
-# cfg_name = cfg.__class__.__name__
+    return results_epo20

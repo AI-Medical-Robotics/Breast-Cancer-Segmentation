@@ -30,7 +30,8 @@ import matplotlib.pyplot as plt
 # Metrics
 from tensorflow.keras.metrics import MeanIoU
 
-
+# Based on Yoonjung's Jupyter notebook helper functions for attention unet
+# James integrated her code into our BC segmentation system app
 SIZE = 256
 
 def loadOneImage(image, SIZE):

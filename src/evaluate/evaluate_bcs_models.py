@@ -30,7 +30,8 @@ from tf_explain.callbacks.grad_cam import GradCAM
 # Metrics
 from tensorflow.keras.metrics import MeanIoU
 
-
+# Based on Yoonjung's Jupyter notebook evaluate attention unet code
+# James integrated her code into our BC segmentation system app
 def evaluate_attention_unet(trained_unet):
     # TODO: Debug history.values() since I get no values. Probably need the UNet to be fully trained
     train_loss, train_acc, train_iou, val_loss, val_acc, val_iou = trained_unet.history.values()

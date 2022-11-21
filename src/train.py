@@ -24,6 +24,9 @@ from evaluate.evaluate_bcs_models import evaluate_attention_unet
 # cfg = get_config(args, mode='train')
 # cfg_name = cfg.__class__.__name__
 
+# Based on Yoonjung's Jupyter notebook for training unet
+# James added functions to make training easier to follow and run from script
+
 # TODO: As we get more models to train, we'll add conditions
 # Run the data prep function, pass images, masks to train attention UNet
 images, masks = prepare_busi_data()
