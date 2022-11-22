@@ -32,31 +32,34 @@ from tensorflow.keras.metrics import MeanIoU
 
 # Based on Yoonjung's Jupyter notebook evaluate attention unet code
 # James integrated her code into our BC segmentation system app
-def evaluate_attention_unet(trained_unet):
-    # TODO: Debug history.values() since I get no values. Probably need the UNet to be fully trained
-    train_loss, train_acc, train_iou, val_loss, val_acc, val_iou = trained_unet.history.values()
+def evaluate_attention_unet(trained_unet, show_results=False):
+    if show_results:
+        # TODO: Debug history.values() since I get no values. Probably need the UNet to be fully trained
+        train_loss, train_acc, train_iou, val_loss, val_acc, val_iou = trained_unet.history.values()
 
-    plt.figure(figsize=(20,8))
+        plt.figure(figsize=(20,8))
 
-    plt.subplot(1,3,1)
-    plt.title("Model Loss")
-    plt.plot(train_loss, label="Training")
-    plt.plot(val_loss, label="Validtion")
-    plt.legend()
-    plt.grid()
+        plt.subplot(1,3,1)
+        plt.title("Model Loss")
+        plt.plot(train_loss, label="Training")
+        plt.plot(val_loss, label="Validtion")
+        plt.legend()
+        plt.grid()
 
-    plt.subplot(1,3,2)
-    plt.title("Model Accuracy")
-    plt.plot(train_acc, label="Training")
-    plt.plot(val_acc, label="Validtion")
-    plt.legend()
-    plt.grid()
+        plt.subplot(1,3,2)
+        plt.title("Model Accuracy")
+        plt.plot(train_acc, label="Training")
+        plt.plot(val_acc, label="Validtion")
+        plt.legend()
+        plt.grid()
 
-    plt.subplot(1,3,3)
-    plt.title("Model IoU")
-    plt.plot(train_iou, label="Training")
-    plt.plot(val_iou, label="Validtion")
-    plt.legend()
-    plt.grid()
+        plt.subplot(1,3,3)
+        plt.title("Model IoU")
+        plt.plot(train_iou, label="Training")
+        plt.plot(val_iou, label="Validtion")
+        plt.legend()
+        plt.grid()
 
-    plt.show()
+        plt.show()
+    else:
+        print("Saving training metrics not supported yet")

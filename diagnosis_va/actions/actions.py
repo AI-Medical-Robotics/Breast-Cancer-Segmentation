@@ -45,7 +45,7 @@ class ActionTrainLesionSegmentation(Action):
             evaluate_attention_unet(trained_att_unet)
         else:
             print("Attention UNet only breast cancer segmentation supported model")
-        dispatcher.utter_message(text="Running Breast Cancer Classifier")
+        dispatcher.utter_message(text="Running Breast Cancer Segmentation Training")
 
 class ActionRunLesionClassification(Action):
     def name(self):
