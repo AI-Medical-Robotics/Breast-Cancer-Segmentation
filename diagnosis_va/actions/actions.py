@@ -56,7 +56,7 @@ class ActionRunLesionClassification(Action):
     def run(self, dispatcher, tracker, domain):
         dispatcher.utter_message(text="Running Breast Cancer Classifier")
 
-class ActionRunLesionSegmentation():
+class ActionRunLesionSegmentation(Action):
     def name(self):
         return "action_run_lesion_segmentation"
     
@@ -79,7 +79,7 @@ class ActionRunLesionSegmentation():
         # reset slot
         return [SlotSet("model_seg_name_deploy", None)]
 
-class ActionRunLesionVolRendering():
+class ActionRunLesionVolRendering(Action):
     def name(self):
         return "action_run_lesion_vol_rendering"
 
