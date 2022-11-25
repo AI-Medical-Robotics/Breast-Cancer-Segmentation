@@ -23,6 +23,9 @@ forms:
   breast_seg_model_form:
     required_slots:
       - model_seg_name
+  breast_seg_model_deploy_form:
+    required_slots:
+      - model_seg_name_deploy
 
 slots:
   patient_clf_id:
@@ -49,6 +52,14 @@ slots:
         conditions:
           - active_loop: breast_seg_model_form
             requested_slot: model_seg_name
+  model_seg_name_deploy:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: breast_seg_model_deploy_form
+            requested_slot: model_seg_name_deploy
 
 responses:
   utter_ask_patient_clf_id:
@@ -63,6 +74,10 @@ responses:
     - text: "What's the breast cancer segmentation model's name needed for training?
              [Attention UNet]\n"
 
+  utter_ask_model_seg_name_deploy:
+    - text: "What's the breast cancer segmentation model's name needed for deployment?
+             [Attention UNet]\n"
+
   utter_report_ack:
     - text: "Thanks for filling in patient ID for report."
 
@@ -71,6 +86,9 @@ responses:
   
   utter_patient_seg_id:
     - text: "Getting patient breast cancer segmentation report for ID: {patient_seg_id}"
+
+  utter_model_seg_name_deploy:
+    - text: "Deploying {model_seg_name_deploy} model for breast cancer segmentation"
 
   utter_training_model_ack:
     - text: "Training your model soon."
@@ -106,6 +124,6 @@ session_config:
 
 actions:
   - action_run_lesion_classification
-  - action_run_lesion_segmentation
   - action_run_lesion_vol_rendering
   - action_train_lesion_segmentation
+  - action_run_lesion_segmentation

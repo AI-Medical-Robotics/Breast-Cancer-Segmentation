@@ -30,6 +30,7 @@ from sklearn.preprocessing import LabelEncoder
 from prepare.prepare_data import prepare_busi_data
 from train.train_bcs_models import train_attention_unet
 from evaluate.evaluate_bcs_models import evaluate_attention_unet
+from deploy.deploy_bcs_models import deploy_model
 
 class ActionTrainLesionSegmentation(Action):
     def name(self):
@@ -46,6 +47,7 @@ class ActionTrainLesionSegmentation(Action):
         else:
             print("Attention UNet only breast cancer segmentation supported model")
         dispatcher.utter_message(text="Running Breast Cancer Segmentation Training")
+        return [SlotSet("model_seg_name", None)]
 
 class ActionRunLesionClassification(Action):
     def name(self):
@@ -59,7 +61,23 @@ class ActionRunLesionSegmentation():
         return "action_run_lesion_segmentation"
     
     def run(self, dispatcher, tracker, domain):
+
+        model_name = tracker.get_slot("model_seg_name_deploy")
+
+        if model_name == "Attention UNet" or model_name == "attention unet":
+            attent_unet_path = "/home/james/proj/james/Breast-Cancer-Segmentation/diagnosis_va/actions/AttentioUnetModel.h5"
+            # attent_unet_path = "/home/james/proj/james/Breast-Cancer-Segmentation/src/AttentioUnetModel.h5"
+
+            bc_ultrasound_data_path = '/media/james/My Passport/Jetson_TX2_CMPE258/Dataset_BUSI_with_GT/'
+            test_images, test_masks = prepare_busi_data(bc_ultrasound_data_path, prep_train=False)
+            attention_unet = deploy_model(attent_unet_path, test_images, test_masks, show_results=True)
+            attention_unet.display_prediction()
+        else:
+            print("Attention UNet only supported model for deployment")
+
         dispatcher.utter_message(text="Running Breast Cancer Segmentation")
+        # reset slot
+        return [SlotSet("model_seg_name_deploy", None)]
 
 class ActionRunLesionVolRendering():
     def name(self):

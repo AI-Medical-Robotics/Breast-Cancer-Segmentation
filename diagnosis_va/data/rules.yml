@@ -51,17 +51,17 @@ rules:
 - rule: Request Patient Breast Cancer Segmentation Report
   steps:
   - intent: req_patient_breast_seg_report
-  - action: patient_report_seg_form
-  - active_loop: patient_report_seg_form
+  - action: breast_seg_model_deploy_form
+  - active_loop: breast_seg_model_deploy_form
 
 - rule: Send Patient Breast Cancer Segmentation Report
   condition:
-  - active_loop: patient_report_seg_form
+  - active_loop: breast_seg_model_deploy_form
   steps:
-  - action: patient_report_seg_form
+  - action: breast_seg_model_deploy_form
   - active_loop: null
   - slot_was_set:
     - requested_slot: null
-  - action: utter_report_ack
-  - action: utter_patient_seg_id
+  # - action: utter_report_ack
+  - action: utter_model_seg_name_deploy
   - action: action_run_lesion_segmentation

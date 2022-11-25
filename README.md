@@ -72,7 +72,14 @@ TODO: Create a shell script to auto launch both rasa servers in new terminals
 docker run --name rasa-chatbot --gpus all -it --privileged -v C:\Users\JamesMedel\GitHub\Breast-Cancer-Segmentation\diagnosis_va:/app rasa_3.1.0_rasa_sdk_1.1.1:dev
 ~~~
 
-2\. Now you're inside the container, run rasa chatbot:
+2\. Train the Rasa chatbot:
+
+~~~bash
+cd app/
+rasa train --domain domain.yml --data data --out models
+~~~
+
+3\. Now you're inside the container, run rasa chatbot:
 
 ~~~bash
 cd /app
@@ -85,7 +92,7 @@ If you just cloned this repo, on a fresh environment, you will need to train Ras
 
 ~~~bash
 cd diagnosis_va/
-rasa train --domain domain.yl --data data --out models
+rasa train --domain domain.yml --data data --out models
 ~~~
 
 Jump into Rasa shell

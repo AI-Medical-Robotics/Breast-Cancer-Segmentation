@@ -8,7 +8,8 @@ attent_unet_path = "/home/james/proj/james/Breast-Cancer-Segmentation/src/Attent
     # Already accounted for training, need to account for deployment
     # that could be a way of getting these test images and masks.
     # Ex: "test_images, test_masks = prepare_busi_data(test=True)". Maybe theres a preset 80% training & 20% test
-test_images, test_masks = prepare_busi_data(train=False)
+bc_ultrasound_data_path = '/media/james/My Passport/Jetson_TX2_CMPE258/Dataset_BUSI_with_GT/'
+test_images, test_masks = prepare_busi_data(bc_ultrasound_data_path, prep_train=False)
 # test_images = None
 # test_masks = None
 
