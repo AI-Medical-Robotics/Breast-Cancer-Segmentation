@@ -35,9 +35,6 @@ from tensorflow.keras.metrics import MeanIoU
 # Based on Yoonjung's Jupyter notebook attention unet data prep code
 # James integrated her code into our BC segmentation system app
 def prepare_busi_data(dataset_path, prep_train = True):
-    # TODO: Pass an option to prepare data for training/validation or testing...
-        # Already accounted for training, need to account for deployment
-    # TODO: update base path "/media/james/My Passport/", make it more adaptable
     file_path = dataset_path
     labels = sorted(os.listdir(file_path))
     labels
@@ -64,11 +61,13 @@ def prepare_busi_data(dataset_path, prep_train = True):
     if prep_train:
         # get the first 80% of image paths for training set
         image_paths = image_paths[:int(num_train_set)]
+        mask_paths = mask_paths[:int(num_train_set)]
         print("Prep Training Data:")
     else:
         # get the last 20% of image paths for testing set,
         # everything remaining after training set
         image_paths = image_paths[int(num_train_set):]
+        mask_paths = mask_paths[int(num_train_set):]
         print("Prep Testing Data:")
 
     print('len(image_paths)', len(image_paths))

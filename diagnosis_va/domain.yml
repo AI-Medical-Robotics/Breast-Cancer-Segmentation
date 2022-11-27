@@ -78,8 +78,11 @@ responses:
     - text: "What's the breast cancer segmentation model's name needed for deployment?
              [Attention UNet]\n"
 
+  # utter_report_ack:
+  #   - text: "Thanks for filling in patient ID for report."
+
   utter_report_ack:
-    - text: "Thanks for filling in patient ID for report."
+    - text: "Thanks for choosing lesion segmentation model for deployment.\n"
 
   utter_patient_clf_id:
     - text: "Getting patient breast cancer classifier report for ID: {patient_clf_id}"
@@ -88,7 +91,7 @@ responses:
     - text: "Getting patient breast cancer segmentation report for ID: {patient_seg_id}"
 
   utter_model_seg_name_deploy:
-    - text: "Deploying {model_seg_name_deploy} model for breast cancer segmentation"
+    - text: "Deploying {model_seg_name_deploy} model for breast cancer segmentation\n"
 
   utter_training_model_ack:
     - text: "Training your model soon."
