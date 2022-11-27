@@ -41,13 +41,16 @@ class ActionTrainLesionSegmentation(Action):
         model_name = tracker.get_slot("model_seg_name")
 
         if model_name == "Attention UNet" or model_name == "attention unet":
+            dispatcher.utter_message(text="Training {} model for breast cancer segmentation\n".format(model_name))
             bc_ultrasound_data_path = '/media/james/My Passport/Jetson_TX2_CMPE258/Dataset_BUSI_with_GT/'
+            us_train_results_path = 'results/attention_unet/train/plot_metrics/'
             images, masks = prepare_busi_data(bc_ultrasound_data_path, prep_train=True)
             trained_att_unet = train_attention_unet(images, masks)
-            evaluate_attention_unet(trained_att_unet)
+            save_train_plot_metrics_file = evaluate_attention_unet(trained_att_unet, us_train_results_path)
         else:
             print("Attention UNet only breast cancer segmentation supported model")
-        dispatcher.utter_message(text="Running Breast Cancer Segmentation Training")
+        dispatcher.utter_message(image=save_train_plot_metrics_file)
+
         return [SlotSet("model_seg_name", None)]
 
 class ActionRunLesionClassification(Action):

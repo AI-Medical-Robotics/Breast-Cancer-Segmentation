@@ -1,5 +1,6 @@
 # common
 import os
+import uuid
 import tensorflow.keras
 import numpy as np
 import pandas as pd
@@ -32,11 +33,14 @@ from tensorflow.keras.metrics import MeanIoU
 
 # Based on Yoonjung's Jupyter notebook evaluate attention unet code
 # James integrated her code into our BC segmentation system app
-def evaluate_attention_unet(trained_unet):
-    # TODO: Debug history.values() since I get no values. Probably need the UNet to be fully trained
+def evaluate_attention_unet(trained_unet, trained_results_path):
+    if not os.path.exists(trained_results_path):
+        os.makedirs(trained_results_path)
+
+    # must pass model after its been trained for getting history
     train_loss, train_acc, train_iou, val_loss, val_acc, val_iou = trained_unet.history.values()
 
-    plt.figure(figsize=(20,8))
+    f = plt.figure(figsize=(20,8))
 
     plt.subplot(1,3,1)
     plt.title("Model Loss")
@@ -59,4 +63,10 @@ def evaluate_attention_unet(trained_unet):
     plt.legend()
     plt.grid()
 
-    plt.show()
+    # plt.show()
+
+    save_plot_metrics_file = "{}/train_val_loss_acc_iou_{}.jpg".format(trained_results_path, uuid.uuid4())
+    f.savefig(save_plot_metrics_file, bbox_inches="tight")
+
+    plt.close(f)
+    return save_plot_metrics_file

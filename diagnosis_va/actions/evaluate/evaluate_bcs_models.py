@@ -1,5 +1,6 @@
 # common
 import os
+import uuid
 import tensorflow.keras
 import numpy as np
 import pandas as pd
@@ -32,34 +33,40 @@ from tensorflow.keras.metrics import MeanIoU
 
 # Based on Yoonjung's Jupyter notebook evaluate attention unet code
 # James integrated her code into our BC segmentation system app
-def evaluate_attention_unet(trained_unet, show_results=False):
-    if show_results:
-        # TODO: Debug history.values() since I get no values. Probably need the UNet to be fully trained
-        train_loss, train_acc, train_iou, val_loss, val_acc, val_iou = trained_unet.history.values()
+def evaluate_attention_unet(trained_unet, trained_results_path):
+    if not os.path.exists(trained_results_path):
+        os.makedirs(trained_results_path)
 
-        plt.figure(figsize=(20,8))
+    # must pass model after its been trained for getting history
+    train_loss, train_acc, train_iou, val_loss, val_acc, val_iou = trained_unet.history.values()
 
-        plt.subplot(1,3,1)
-        plt.title("Model Loss")
-        plt.plot(train_loss, label="Training")
-        plt.plot(val_loss, label="Validtion")
-        plt.legend()
-        plt.grid()
+    f = plt.figure(figsize=(20,8))
 
-        plt.subplot(1,3,2)
-        plt.title("Model Accuracy")
-        plt.plot(train_acc, label="Training")
-        plt.plot(val_acc, label="Validtion")
-        plt.legend()
-        plt.grid()
+    plt.subplot(1,3,1)
+    plt.title("Model Loss")
+    plt.plot(train_loss, label="Training")
+    plt.plot(val_loss, label="Validtion")
+    plt.legend()
+    plt.grid()
 
-        plt.subplot(1,3,3)
-        plt.title("Model IoU")
-        plt.plot(train_iou, label="Training")
-        plt.plot(val_iou, label="Validtion")
-        plt.legend()
-        plt.grid()
+    plt.subplot(1,3,2)
+    plt.title("Model Accuracy")
+    plt.plot(train_acc, label="Training")
+    plt.plot(val_acc, label="Validtion")
+    plt.legend()
+    plt.grid()
 
-        plt.show()
-    else:
-        print("Saving training metrics not supported yet")
+    plt.subplot(1,3,3)
+    plt.title("Model IoU")
+    plt.plot(train_iou, label="Training")
+    plt.plot(val_iou, label="Validtion")
+    plt.legend()
+    plt.grid()
+
+    # plt.show()
+
+    save_plot_metrics_file = "{}/train_val_loss_acc_iou_{}.jpg".format(trained_results_path, uuid.uuid4())
+    f.savefig(save_plot_metrics_file, bbox_inches="tight")
+
+    plt.close(f)
+    return save_plot_metrics_file

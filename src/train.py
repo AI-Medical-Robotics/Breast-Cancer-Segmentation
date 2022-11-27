@@ -31,6 +31,7 @@ from evaluate.evaluate_bcs_models import evaluate_attention_unet
 # Run the data prep function, pass images, masks to train attention UNet
 # default split 80% for training set
 bc_ultrasound_data_path = '/media/james/My Passport/Jetson_TX2_CMPE258/Dataset_BUSI_with_GT/'
+us_train_results_path = 'results/attention_unet/train/plot_metrics/'
 images, masks = prepare_busi_data(bc_ultrasound_data_path, prep_train=True)
 trained_att_unet = train_attention_unet(images, masks)
-evaluate_attention_unet(trained_att_unet)
+save_train_plot_metrics_file = evaluate_attention_unet(trained_att_unet, us_train_results_path)

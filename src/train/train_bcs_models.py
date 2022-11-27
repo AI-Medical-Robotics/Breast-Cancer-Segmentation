@@ -43,9 +43,10 @@ class report(Callback):
         self.m_images = images
         self.m_masks = masks
         self.m_show_results = show_results
+        self.m_us_train_plots_path = "train_plots/"
         
     def on_epoch_end(self, epochs, logs=None):
-        id = np.random.randint(200)
+        id = np.random.randint(len(self.m_images))
         explainer = GradCAM()
         image = self.m_images[id]
         mask = self.m_masks[id]
@@ -57,24 +58,30 @@ class report(Callback):
             model=self.model
         )
 
-        #show results:
+        f = plt.figure(figsize=(10,5))
+
+        plt.subplot(1,3,1)
+        plt.title("Original Image With Mask")
+        showMask(image, mask, cmap='afmhot')
+
+        plt.subplot(1,3,2)
+        plt.title("Original Image With Predicted Mask")
+        showMask(image, pred_mask, cmap='afmhot')
+
+        plt.subplot(1,3,3)
+        showImage(cam_explain, title="GradCAMCallback")
+
+        plt.tight_layout()
+
         if self.m_show_results:
-            plt.figure(figsize=(10,5))
-
-            plt.subplot(1,3,1)
-            plt.title("Original Image With Mask")
-            showMask(image, mask, cmap='afmhot')
-
-            plt.subplot(1,3,2)
-            plt.title("Original Image With Predicted Mask")
-            showMask(image, pred_mask, cmap='afmhot')
-
-            plt.subplot(1,3,3)
-            showImage(cam_explain, title="GradCAMCallback")
-
-            plt.tight_layout()
             plt.show()
+
+        # TODO: save figs, turn into video
+
+        plt.close(f)
         # add else block to save results as jpgs
+        if epochs % 5 == 0:
+            print("Training AttentionUNet: Current Epochs = {}".format(epochs))
 
 def train_attention_unet(images, masks):
     print("images.shape[-3:] = {}".format(images.shape[-3:]))
@@ -85,7 +92,7 @@ def train_attention_unet(images, masks):
 
     # Save the model.
     cb = [
-        ModelCheckpoint("AttentioUnetModel.h5", save_best_only=True),
+        ModelCheckpoint("AttentionUnetModel.h5", save_best_only=True),
         report(images, masks)
     ]
 
@@ -103,8 +110,6 @@ def train_attention_unet(images, masks):
         images, masks,
         validation_split=0.2,
         epochs=20,
-        steps_per_epoch=SPE,
-        batch_size=BATCH_SIZE,
         callbacks=cb
     )
 

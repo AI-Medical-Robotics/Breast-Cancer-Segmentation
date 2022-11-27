@@ -214,7 +214,7 @@ public class NetworkManager : MonoBehaviour
                 imageWidth = texWidth;
 
                 if(imageWidth > (int)(scrollViewRect.rect.width/2)) {
-                    imageWidth = (int)(scrollViewRect.rect.width*0.85);
+                    imageWidth = (int)(scrollViewRect.rect.width*0.9);
                 }
 
                 float ratio = texWidth/imageWidth;
@@ -225,7 +225,7 @@ public class NetworkManager : MonoBehaviour
                 imageHeight = texHeight;
 
                 if(imageHeight > (int)(scrollViewRect.rect.height/2)) {
-                    imageHeight = (int)(scrollViewRect.rect.height*0.85);
+                    imageHeight = (int)(scrollViewRect.rect.height*0.9);
                 }
 
                 float ratio = texHeight/imageHeight;
