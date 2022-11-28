@@ -2,6 +2,33 @@
 
 Lesion segmentation for breast cancer diagnosis.
 
+## CMPE 258 Project Submission Checklist
+
+- [] 4\. Ten minutes presentation and program demo:
+
+    - [ ] (4.1) PPT (up to 5-7 slides) for 5-7 minutes presentation;
+    - [ ] (4.2) Demo, 1 minute;
+    - [ ] (4.3) Code walk-through for 1-2 minutes;
+    - [ ] (4.4) Q&A, 1 minute.
+
+- [ ] 5\. Save up to 20 ~ 50 seconds demo video into a file for submission.
+- [ ] 6. Submit:
+
+    - [ ] a. Executive Summary;
+    - [ ] b. PPT;
+    - [ ] c. Your saved video clip;
+    - [ ] d. The program package (source code and all relevant files and folders);
+    - [ ] e. A readme file. Be sure detailed adequate information is provided for testing and verification purpose.
+
+- [ ] 7. Put all the above files into one file and zip it.
+- [ ] 8. Use the following file naming convention for your zip file:
+
+    - [ ] firstNamePerson1_firstNamePerson2_FirstNamePerson3_FirstNamePerson4_CoordinatorSID(last-4-digits)_cmpe258_team.zip.
+    - [ ] Ex: `Yoonjun_Choi_Omkar_Suryakant_Naik_Archil_Beridze_James_Medel_6649_cmpe258_team.zip`
+
+- [ ] Submit it to the class canvas.
+
+
 ## Outline
 
 ## Software Dependencies
