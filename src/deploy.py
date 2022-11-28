@@ -2,7 +2,7 @@
 from prepare.prepare_data import prepare_busi_data
 from deploy.deploy_bcs_models import deploy_model
 
-attent_unet_path = "/home/james/proj/james/Breast-Cancer-Segmentation/src/AttentioUnetModel.h5"
+attent_unet_path = "/home/james/proj/james/Breast-Cancer-Segmentation/src/AttentionUnetModel.h5"
 
 # Prep data: either 80% training or 20% test
 bc_ultrasound_data_path = '/media/james/My Passport/Jetson_TX2_CMPE258/Dataset_BUSI_with_GT/'
