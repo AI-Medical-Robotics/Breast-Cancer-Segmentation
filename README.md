@@ -6,16 +6,15 @@ Lesion segmentation for breast cancer diagnosis.
 
 ## Software Dependencies
 
-- Rasa 3.1.0 (Rasa Chatbot Server)
-- Rasa 3.1.1 SDK (Rasa Actions Server)
+- Rasa 3.2.4 (Rasa Chatbot Server)
+- Rasa SDK 3.2.2 (Rasa Actions Server)
 - TensorFlow-GPU 2.7.1 (Needed for Rasa Actions Server)
+- Torch 1.13.0 (Needed for Rasa Actions Server)
 - OpenCV-Python 4.6.0.66 (Needed for Rasa Actions Server)
 - Scikit-Learn 0.24.2
 - Seaborn 0.11.2
 - Matplotlib 3.3.4
-- Pandas 1.3.4
 - Jupyter 1.0.0
-- Ngrok version latest
 
 **conda environment yml files**
 
