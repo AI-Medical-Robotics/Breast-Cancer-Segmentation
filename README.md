@@ -4,34 +4,47 @@ Lesion segmentation for breast cancer diagnosis.
 
 ## CMPE 258 Project Submission Checklist
 
-- [] 4\. Ten minutes presentation and program demo:
+- [x] 4\. Ten minutes presentation and program demo:
 
-    - [ ] (4.1) PPT (up to 5-7 slides) for 5-7 minutes presentation;
-    - [ ] (4.2) Demo, 1 minute;
-    - [ ] (4.3) Code walk-through for 1-2 minutes;
+    - [x] (4.1) PPT (up to 5-7 slides) for 5-7 minutes presentation;
+    - [x] (4.2) Demo, 1 minute;
+    - [x] (4.3) Code walk-through for 1-2 minutes;
     - [ ] (4.4) Q&A, 1 minute.
 
-- [ ] 5\. Save up to 20 ~ 50 seconds demo video into a file for submission.
-- [ ] 6. Submit:
+- [x] 5\. Save up to 20 ~ 50 seconds demo video into a file for submission.
+- [x] 6. Submit:
 
-    - [ ] a. Executive Summary;
-    - [ ] b. PPT;
-    - [ ] c. Your saved video clip;
-    - [ ] d. The program package (source code and all relevant files and folders);
-    - [ ] e. A readme file. Be sure detailed adequate information is provided for testing and verification purpose.
+    - [x] a. Executive Summary;
+    - [x] b. PPT;
+    - [x] c. Your saved video clip;
+    - [x] d. The program package (source code and all relevant files and folders);
+    - [x] e. A readme file. Be sure detailed adequate information is provided for testing and verification purpose.
 
-- [ ] 7. Put all the above files into one file and zip it.
-- [ ] 8. Use the following file naming convention for your zip file:
+- [x] 7. Put all the above files into one file and zip it.
+- [x] 8. Use the following file naming convention for your zip file:
 
-    - [ ] firstNamePerson1_firstNamePerson2_FirstNamePerson3_FirstNamePerson4_CoordinatorSID(last-4-digits)_cmpe258_team.zip.
-    - [ ] Ex: `Yoonjun_Choi_Omkar_Suryakant_Naik_Archil_Beridze_James_Medel_6649_cmpe258_team.zip`
+    - [x] firstNamePerson1_firstNamePerson2_FirstNamePerson3_FirstNamePerson4_CoordinatorSID(last-4-digits)_cmpe258_team.zip.
+    - [x] Ex: `Yoonjun_Choi_Omkar_Suryakant_Naik_Archil_Beridze_James_Medel_6649_cmpe258_team.zip`
 
-- [ ] Submit it to the class canvas.
-
+- [x] Submit it to the class canvas.
 
 ## Outline
 
+- Software Dependencies
+- Setup Software Dev Environment
+- How to Run Unity Rasa Breast Diagnosis Demo
+    - Run Rasa Breast Cancer Diagnosis Chatbot + Actions Servers Natively
+    - Run Unity Breast Diagnosis Chat Window App
+- How to Run Python Breast Diagnosis Demo
+    - Run Python Training Script
+    - Run Python Deploy Script
+- Notebooks
+    - Data Exploration
+    - DL Pipeline
+
 ## Software Dependencies
+
+Here are some of the software dependencies:
 
 - Rasa 3.2.4 (Rasa Chatbot Server)
 - Rasa SDK 3.2.2 (Rasa Actions Server)
@@ -43,89 +56,166 @@ Lesion segmentation for breast cancer diagnosis.
 - Matplotlib 3.3.4
 - Jupyter 1.0.0
 
-**conda environment yml files**
+Check out our conda environments that come with all the software dependencies and extra:
 
-TODO: Update environment yml files since I am missing some packages
+- [environments/attent_unet_env/gpu/environment_rasa_tf_gpu.yml](./environments/attent_unet_env/gpu/environment_rasa_tf_gpu.yml)
+    - The environment yml file above is used with **rasa actions server**.
+    - Recommend using the above environment yml for training models as long as you have gpu.
+- [environments/attent_unet_env/cpu/environment_rasa_tf_cpu.yml](./environments/attent_unet_env/cpu/environment_rasa_tf_cpu.yml)
+    - The environment yml file above is used with **rasa run server**.
 
-Create a `environment_rasa_tf_cpu.yml` conda environment:
-
-~~~bash
-conda env create -f environment_rasa_tf_cpu.yml
-~~~
-
-Create a `environment_rasa_tf_gpu.yml` conda environment:
-
-~~~bash
-conda env create -f environment_rasa_tf_gpu.yml
-~~~
+## Setup Software Dev Environment
 
 1\. Clone this repo:
 
 ~~~bash
 git clone https://github.com/AI-Medical-Robotics/Breast-Cancer-Segmentation.git
-~~~
 
-2\. Go to breast cancer segmentation project:
-
-~~~bash
+# navigate to breast cancer segmentation
 cd path/to/Breast-Cancer-Segmentation
 ~~~
 
-## Setup Software Dev Environment
+2\. Download the Ultrasound Breast Cancer Segmentation Dataset:
 
-1\. Build rasa chatbot docker container:
+- Kaggle Breast Cancer Ultrasound Dataset: https://www.kaggle.com/datasets/aryashah2k/breast-ultrasound-images-dataset
 
 ~~~bash
-cd Breast-Cancer-Segmentation
-docker build -t rasa_3.1.0_rasa_sdk_3.1.1:dev .
+# Example: saved Ultrasound Dataset "Dataset_BUSI_with_GT" along this path
+'/media/james/My Passport/Jetson_TX2_CMPE258/Dataset_BUSI_with_GT/'
+
+# Make sure to save your Kaggle Ultrasound Dataset to  a place where the python scripts can find it.
 ~~~
 
-## How to Run Demo
-
-## Docker Compose to Auto Launch Rasa-Run Server & Actions Server
-
-TODO: Create docker-compose.yml file
-
-## Auto Launch Rasa-Run Server & Actions Server
-
-TODO: Create a shell script to auto launch both rasa servers in new terminals
-
-### Run Rasa Breast Cancer Diagnosis in Docker
-
-1\. Launch rasa chatbot container:
+3\. Create a `environment_rasa_tf_cpu.yml` conda environment:
 
 ~~~bash
-docker run --name rasa-chatbot --gpus all -it --privileged -v C:\Users\JamesMedel\GitHub\Breast-Cancer-Segmentation\diagnosis_va:/app rasa_3.1.0_rasa_sdk_1.1.1:dev
+cd environments/attent_unet_env/cpu/
+conda env create -f environment_rasa_tf_cpu.yml
+~~~
+
+4\. Create a `environment_rasa_tf_gpu.yml` conda environment:
+
+~~~bash
+environments/attent_unet_env/gpu/
+conda env create -f environment_rasa_tf_gpu.yml
+~~~
+
+## How to Run Unity Rasa Breast Diagnosis Demo
+
+### Run Rasa Breast Cancer Diagnosis Chatbot + Actions Servers Natively
+
+1\. **Open a terminal**, activate rasa cpu conda environment for **rasa run server**:
+
+~~~bash
+conda activate cmpe258_proj_attunet_rasa_tf_cpu
 ~~~
 
 2\. Train the Rasa chatbot:
 
 ~~~bash
-cd app/
-rasa train --domain domain.yml --data data --out models
-~~~
-
-3\. Now you're inside the container, run rasa chatbot:
-
-~~~bash
-cd /app
-rasa shell
-~~~
-
-### Run Rasa Breast Cancer Diagnosis Natively
-
-If you just cloned this repo, on a fresh environment, you will need to train Rasa chatbot:
-
-~~~bash
 cd diagnosis_va/
 rasa train --domain domain.yml --data data --out models
 ~~~
 
-Jump into Rasa shell
+- NOTE: If you just cloned this repo, on a fresh environment, you will need to train Rasa chatbot 
+
+3\. Run rasa chatbot run server:
 
 ~~~bash
 cd diagnosis_va/
-rasa shell
+rasa run
 ~~~
 
+4\. **Open a new terminal**, activate rasa gpu conda environment for **rasa run actions server**:
+
+~~~bash
+conda activate cmpe258_proj_attunet_rasa_tf_gpu
+~~~
+
+5\. Run rasa actions server:
+
+~~~bash
+cd path/to/Breast-Cancer-Segmentation/diagnosis_va/actions
+rasa run actions
+~~~
+
+### Run Unity Breast Diagnosis Chat Window App
+
+The Unity breast diagnosis chat window app integrates with Rasa Chatbot run server through the **rasa_url**.
+
+1\. If you don't have **Unity Hub**, we recommend installing it at this link:
+
+- [Download Unity Hub](https://unity3d.com/get-unity/download)
+
+2\. Once you have Unity Hub installed, open it and then you can **add** the project. You just need to point Unity Hub to your project folder. In our case, **RasaUnityBreastDiagnosis/**.
+
+- NOTE: We recommend through Unity Hub, you install **Unity Version: 2021.3.13f1**, but if not available, you can install the next LTS version and then load our app. Unity will update the project's assets to the latest version.
+
+3\. The Unity project should be open, then you can click the **play** button in the center and the **RasaUnityBreastDiagnosis** App will start.
+
+![unity_rasa_breast_diagnosis_app_sample_.jpg](./images/unity_rasa_breast_diagnosis_app_sample_.jpg)
+
+## How to Run Python Breast Diagnosis Demo
+
+You can also run parts of the application through python scripts directly. We recommend you activate conda rasa gpu environment, but we wont use rasa part just the TensorFlow and other helper dependencies. 
+
+~~~bash
+conda activate cmpe258_proj_attunet_rasa_tf_gpu
+~~~
+
+Then go to `src/` folder.
+
+~~~bash
+cd path/to/Breast-Cancer-Segmentation/src
+~~~
+
+### Run Python Training Script
+
+~~~bash
+python train.py
+~~~
+
+### Run Python Deploy Script
+
+~~~bash
+python deploy.py
+~~~
+
+## Notebooks
+
+### DL Pipeline
+
+Omkar's LinkNet Breast Cancer Segmentation Notebook:
+
+![linknet_scratch_lesion_segmentation_learning_omkar.jpg](./images/linknet_scratch_lesion_segmentation_learning_omkar.jpg)
+
+- [Omkar's Notebook: LinkNet Model for Breast Cancer Segmentation](./DLPipeline/omkarnaik_bcseg_linknet_scratch.ipynb)
+
+Yoonjung's Attention UNet Breast Cancer Segmentation Notebook:
+
+![attention_unet_scratch_lesion_segmentation_learning_yoonjung.jpg](./images/attention_unet_scratch_lesion_segmentation_learning_yoonjung.jpg)
+
+- [Yoonjung's Notebook: Attention UNet for Breast Cancer Segmentation](./DLPipeline/yoonjung_imagesegmentation_attentionunet_scratch.ipynb)
+
+### Data Exploration
+
+Here are just some examples of our data exploration notebooks.
+
+Yoonjungs Data Exploration Notebook on Chinese Breast Cancer Mammograms:
+
+![chinese_mammography_db_images_yoonjung.jpg](./images/chinese_mammography_db_images_yoonjung.jpg)
+
+- [Yoonjungs Notebook: DataExploration](./DataExploration/DataExplorationCMMD.ipynb)
+
+Archil's Data Inspection & ResNet Notebook on Breast Cancer Mammograms:
+
+![data_exploration_mammogram_archil.jpg](./images/data_exploration_mammogram_archil.jpg)
+
+- [Archils Notebook: DataInspection](./DataExploration/data_inspection.ipynb)
+
+James Data Exploration Notebook on Breast Cancer Diagnosis MRIs:
+
+![breast_diagnosis_mri_images_james.jpg](./images/breast_diagnosis_mri_images_james.jpg)
+
+- [James Notebook: DataExploration](./DataExploration/DataExplorationTciaBD.ipynb)
 
