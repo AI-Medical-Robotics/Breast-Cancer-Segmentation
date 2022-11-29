@@ -69,7 +69,7 @@ class ActionRunLesionSegmentation(Action):
         model_name = tracker.get_slot("model_seg_name_deploy")
 
         if model_name == "Attention UNet" or model_name == "attention_unet":
-            attent_unet_path = "/home/james/proj/james/Breast-Cancer-Segmentation/diagnosis_va/actions/AttentioUnetModel.h5"
+            attent_unet_path = "/home/james/proj/james/Breast-Cancer-Segmentation/diagnosis_va/actions/AttentionUnetModel.h5"
             # attent_unet_path = "/home/james/proj/james/Breast-Cancer-Segmentation/src/AttentioUnetModel.h5"
 
             bc_ultrasound_data_path = '/media/james/My Passport/Jetson_TX2_CMPE258/Dataset_BUSI_with_GT/'

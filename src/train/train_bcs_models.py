@@ -106,12 +106,12 @@ def train_attention_unet(images, masks):
     # TF: WARNING:tensorflow:Your input ran out of data; interrupting training. 
     # Make sure that your dataset or generator can generate at least `steps_per_epoch * epochs` 
     # batches (in this case, 3900 batches)
-    results_epo20 = model.fit(
+    results_epo25 = model.fit(
         images, masks,
         validation_split=0.2,
-        epochs=20,
+        epochs=25,
         callbacks=cb
     )
 
     # return trained attention UNet or saved file location .h5
-    return results_epo20
+    return results_epo25
